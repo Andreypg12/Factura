@@ -21,6 +21,7 @@ public class MdiPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MdiPrincipal.MAXIMIZED_BOTH);
         crearProductos();
+        crearSucursales();
     }
     
     private void crearProductos(){

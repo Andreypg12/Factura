@@ -18,6 +18,24 @@ public class PersistenciaProductos {
     public static void eliminarProducto(Producto producto){
         arrayProductos.remove(producto);
     }
+    
+    public static boolean existe(String nombre){
+        for (Producto producto : arrayProductos) {
+            if (producto.getNombre().equalsIgnoreCase(nombre)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static Producto buscarPorNombre(String nombre){
+        for (Producto producto : arrayProductos) {
+            if(producto.getNombre().equals(nombre)){
+                return producto;
+            }
+        }
+        return null;
+    }
 
     public static List<Producto> getArrayProductos() {
         return arrayProductos;

@@ -4,7 +4,9 @@
  */
 package Factura;
 
+import Persistencia.PersistenciaProductos;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,15 +21,33 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+    private Producto producto;
+    private EnumMantenimiento tipoMantenimiento;
 
     public jDlgMantenimientoProductos(Producto producto, EnumMantenimiento tipoMantenimiento) {
         initComponents();
         llenarCombo();
         
         switch (tipoMantenimiento) {
-            case EnumMantenimiento.MODIFICAR ->{
+            case MODIFICAR ->{
                 jTxtNombre.setText(producto.getNombre());
                 jTxtPrecio.setText(String.valueOf(producto.getPrecioBasico()));
+                jComboBox1.setSelectedItem(producto.getTipo());
+                this.producto = producto;
+                this.tipoMantenimiento = tipoMantenimiento;
+            }
+            case AGREGAR ->{
+                this.tipoMantenimiento = tipoMantenimiento;
+            }
+            case CONSULTAR ->{
+                jTxtNombre.setText(producto.getNombre());
+                jTxtNombre.setEnabled(false);
+                jTxtPrecio.setText(String.valueOf(producto.getPrecioBasico()));
+                jTxtPrecio.setEnabled(false);
+                jComboBox1.setSelectedItem(producto.getTipo());
+                jComboBox1.setEnabled(false);
+                this.tipoMantenimiento = tipoMantenimiento;
             }
                 
         }
@@ -36,8 +56,6 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
     public void llenarCombo(){
         jComboBox1.setModel(new DefaultComboBoxModel(TipoProducto.values()));
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,6 +73,7 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jBtnAceptar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,16 +90,27 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
         jLabel3.setText("Tipo del producto");
 
         jBtnAceptar.setText("Aceptar");
+        jBtnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAceptarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBtnAceptar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,7 +119,12 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTxtPrecio, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 197, Short.MAX_VALUE)
-                            .addComponent(jTxtNombre, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(jTxtNombre, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(177, 177, 177)
+                        .addComponent(jBtnAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,7 +143,9 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1))
                 .addGap(18, 18, 18)
-                .addComponent(jBtnAceptar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnAceptar)
+                    .addComponent(jButton1))
                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
@@ -119,9 +156,43 @@ public class jDlgMantenimientoProductos extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtNombreActionPerformed
 
+    private void jBtnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAceptarActionPerformed
+        // TODO add your handling code here:
+        switch (tipoMantenimiento) {
+            case MODIFICAR ->{
+                    producto.setNombre(jTxtNombre.getText());
+                    producto.setPrecioBasico(Double.parseDouble(jTxtPrecio.getText()));
+                    producto.setTipo((TipoProducto)jComboBox1.getSelectedItem());
+                    dispose();
+            }
+            case AGREGAR ->{
+                if (PersistenciaProductos.existe(jTxtNombre.getText())) {
+                    JOptionPane.showMessageDialog(null, "El producto ya existe");
+                }else{
+                    Producto nuevoProducto = new Producto(jTxtNombre.getText(),
+                            Double.parseDouble(jTxtPrecio.getText()),
+                            (TipoProducto)jComboBox1.getSelectedItem());
+                    PersistenciaProductos.agregarProductos(nuevoProducto);
+                    dispose();
+                }
+            }
+            case CONSULTAR ->{
+                dispose();
+            }
+        }
+        
+        
+    }//GEN-LAST:event_jBtnAceptarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAceptar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<TipoProducto> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

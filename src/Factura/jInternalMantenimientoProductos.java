@@ -5,6 +5,7 @@
 package Factura;
 
 import Persistencia.PersistenciaProductos;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -47,47 +48,64 @@ public class jInternalMantenimientoProductos extends javax.swing.JInternalFrame 
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jBtnAgregar = new javax.swing.JButton();
+        jBtnModificar = new javax.swing.JButton();
+        jBtnEliminar = new javax.swing.JButton();
+        jBtnConsultar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProductos = new javax.swing.JTable();
 
+        setClosable(true);
+
         jToolBar1.setRollover(true);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setText("Agregar");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton2.setText("Modificar");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBtnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jBtnAgregar.setText("Agregar");
+        jBtnAgregar.setFocusable(false);
+        jBtnAgregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnAgregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBtnAgregarActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(jBtnAgregar);
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton3.setText("Eliminar");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        jBtnModificar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jBtnModificar.setText("Modificar");
+        jBtnModificar.setFocusable(false);
+        jBtnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnModificarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jBtnModificar);
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton4.setText("Consultar");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        jBtnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.setFocusable(false);
+        jBtnEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEliminarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jBtnEliminar);
+
+        jBtnConsultar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jBtnConsultar.setText("Consultar");
+        jBtnConsultar.setFocusable(false);
+        jBtnConsultar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnConsultar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnConsultarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jBtnConsultar);
 
         jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,7 +133,7 @@ public class jInternalMantenimientoProductos extends javax.swing.JInternalFrame 
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,22 +142,63 @@ public class jInternalMantenimientoProductos extends javax.swing.JInternalFrame 
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        if(jTableProductos.getSelectedRow() >= 0){
+            jDlgMantenimientoProductos jDialogProductos;
+            String nombre = (String) modelo.getValueAt(jTableProductos.getSelectedRow(), 0);
+            Producto producto = PersistenciaProductos.buscarPorNombre(nombre);
+            if(producto != null){
+                jDialogProductos = new jDlgMantenimientoProductos(producto, EnumMantenimiento.MODIFICAR);
+                jDialogProductos.setModal(true);
+                jDialogProductos.setVisible(true);
+                agregarProductos();
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "El producto no existe");
+            }
+        }
+    }//GEN-LAST:event_jBtnModificarActionPerformed
+
+    private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
+        // TODO add your handling code here:
+        jDlgMantenimientoProductos jDialogProductos = new jDlgMantenimientoProductos(null, EnumMantenimiento.AGREGAR);
+        jDialogProductos.setModal(true);
+        jDialogProductos.setVisible(true);
+        agregarProductos();
+    }//GEN-LAST:event_jBtnAgregarActionPerformed
+
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+        // TODO add your handling code here:
+        if(jTableProductos.getSelectedRow() != -1){
+            String nombre = (String)modelo.getValueAt(jTableProductos.getSelectedRow(), 0);
+            Producto productoEliminar = PersistenciaProductos.buscarPorNombre(nombre);
+            PersistenciaProductos.eliminarProducto(productoEliminar);
+            agregarProductos();
+        }
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
+        // TODO add your handling code here:
+        String nombre = (String)modelo.getValueAt(jTableProductos.getSelectedRow(), 0);
+        Producto producto = PersistenciaProductos.buscarPorNombre(nombre);
+        jDlgMantenimientoProductos jDialog = new jDlgMantenimientoProductos(producto, EnumMantenimiento.CONSULTAR);
+        jDialog.setModal(true);
+        jDialog.setVisible(true);
+    }//GEN-LAST:event_jBtnConsultarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jBtnAgregar;
+    private javax.swing.JButton jBtnConsultar;
+    private javax.swing.JButton jBtnEliminar;
+    private javax.swing.JButton jBtnModificar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableProductos;
     private javax.swing.JToolBar jToolBar1;
